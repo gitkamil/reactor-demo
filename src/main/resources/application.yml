@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: reactivedemo
+  r2dbc:
+    url: r2dbc:h2:mem:///testdb
+    username: sa
+    password: sa
+  h2:
+    console:
+      enabled: true
