@@ -1,6 +1,7 @@
 package edu.kamil.reactivedemo.infrastructure.adapter.rest;
 
 import edu.kamil.reactivedemo.domain.port.persistance.RepositoryPort;
+import edu.kamil.reactivedemo.domain.user.UserServicePort;
 import edu.kamil.reactivedemo.infrastructure.adapter.client.persistance.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,23 +11,23 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    final private RepositoryPort repositoryPort;
+    final private UserServicePort userService;
 
     @PostMapping
     public Mono<Boolean> createUser(@RequestBody User user) {
 
-        return repositoryPort.saveUser(user);
+        return userService.saveUser(user);
     }
 
     @GetMapping
     public Mono<User> getUser(@RequestParam final long id) {
-        return repositoryPort.findUserById(id);
+        return userService.getUser(id);
     }
 
     @PutMapping
     public Mono<Boolean> updateUser(@RequestParam String pesel,
                                  @RequestBody User user,
                                  @RequestHeader("Role") String requesterRole) {
-        return repositoryPort.updateUser(pesel, user, requesterRole);
+        return userService.updateUser(pesel, user, requesterRole);
     }
 }
