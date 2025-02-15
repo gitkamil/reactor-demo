@@ -9,6 +9,8 @@ import org.springframework.data.relational.core.mapping.Table;
 public class User {
     @Id
     private Long id;
-    private String name;
-
+    private String firstName;
+    private String lastName;
+    private String pesel;
+    private String role;
 }

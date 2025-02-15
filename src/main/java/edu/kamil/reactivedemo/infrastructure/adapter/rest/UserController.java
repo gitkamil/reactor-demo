@@ -14,11 +14,19 @@ public class UserController {
 
     @PostMapping
     public Mono<Boolean> createUser(@RequestBody User user) {
+
         return repositoryPort.saveUser(user);
     }
 
     @GetMapping
     public Mono<User> getUser(@RequestParam final long id) {
         return repositoryPort.findUserById(id);
+    }
+
+    @PutMapping
+    public Mono<Boolean> updateUser(@RequestParam String pesel,
+                                 @RequestBody User user,
+                                 @RequestHeader("Role") String requesterRole) {
+        return repositoryPort.updateUser(pesel, user, requesterRole);
     }
 }

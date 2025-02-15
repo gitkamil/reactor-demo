@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 public interface RepositoryPort  {
     Mono<Boolean> saveUser(User user);
     Mono<User> findUserById(long id);
+    Mono<Boolean> updateUser(String pesel, User user, String requesterRole);
 }

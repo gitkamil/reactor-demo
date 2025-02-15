@@ -13,7 +13,7 @@ class RepositoryAdapter implements RepositoryPort {
 
     @Override
     public Mono<Boolean> saveUser(User user) {
-        return userService.createUser(user);
+        return userService.saveUser(user);
     }
 
     @Override
@@ -21,4 +21,18 @@ class RepositoryAdapter implements RepositoryPort {
         return userService.getUser(id);
     }
 
+    public Mono<Boolean> updateUser(String pesel, User user, String requesterRole) {
+        if (!"ADMIN".equals(requesterRole)) {
+            return Mono.error(new IllegalAccessException("Only ADMIN can modify users"));
+        }
+        return userService.findByPesel(pesel)
+                .flatMap(existingUser -> {
+                    existingUser.setFirstName(user.getFirstName());
+                    existingUser.setLastName(user.getLastName());
+                    existingUser.setPesel(user.getPesel());
+                    existingUser.setRole(user.getRole());
+
+                    return userService.saveUser(existingUser);
+                });
+    }
 }

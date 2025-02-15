@@ -11,11 +11,15 @@ import reactor.core.publisher.Mono;
 class UserService {
     private final UserRepository userRepository;
 
-    Mono<Boolean> createUser(User user) {
+    Mono<Boolean> saveUser(User user) {
         return userRepository.save(user).map(u -> true);
     }
 
     Mono<User> getUser(long id) {
         return userRepository.findById(id);
+    }
+
+    Mono<User> findByPesel(String pesel) {
+        return userRepository.findByPesel(pesel);
     }
 }
